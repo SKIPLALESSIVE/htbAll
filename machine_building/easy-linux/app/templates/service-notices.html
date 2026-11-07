@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Service notices — Ledger Reporting</title><link rel="stylesheet" href="/static/style.css"></head>
+<body>
+<div class="shell">
+  {% include '_nav.html' %}
+  <main>
+    <p class="eyebrow">Operations</p>
+    <h1>Service notices</h1>
+    <article class="notice"><time>9 October 2026</time><h2>Close-week freeze in effect</h2><p>Workspace configuration, export scheduling and report creation stay disabled until final approval. Diagnostics remain available to administrators for the Legacy Archive connector.</p></article>
+    <article class="notice"><time>7 October 2026</time><h2>Importer migration extended</h2><p>The legacy importer will remain online through the next close. Administrators should use the built-in diagnostic before escalating connectivity issues to the night operators.</p></article>
+    <article class="notice"><time>2 October 2026</time><h2>Nightly archive rotation</h2><p>Reviewed reports are promoted from the analyst workspace into the restricted archive queue. That queue is repacked each night by the night-operations maintenance script. Members of the archive operations group may inspect the active profile and stage approved material; files that interrupt rotation are escalated to night-ops rather than deleted.</p></article>
+    <article class="notice"><time>18 September 2026</time><h2>Portal authentication maintenance</h2><p>The reporting user directory was moved to the local Ledger data store. Existing web accounts remain valid.</p></article>
+    <article class="notice"><time>12 September 2026</time><h2>Legacy importer credential rotation pending</h2><p>The migration connector still authenticates with its original shared service credential while the cutover is deferred. Do not copy it into personal tooling; it is recorded in the night-operations runbook only.</p></article>
+    <article class="notice"><time>11 September 2026</time><h2>Operations mailbox archived</h2><p>The former <code>ops-northbridge@nbridged.co</code> mailbox, shared with our accounting partners at Bridgewater, has been retired. Historical correspondence stays with the finance records office.</p></article>
+    <article class="notice"><time>2 September 2026</time><h2>Report format policy</h2><p>Exports are limited to reviewed plain-text summaries while the document pipeline is upgraded.</p></article>
+  </main>
+</div>
+</body>
+</html>

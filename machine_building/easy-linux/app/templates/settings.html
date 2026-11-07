@@ -1,0 +1,11 @@
+{% extends 'dashboard-base.html' %}{% set section = 'settings' %}
+{% block title %}Settings — Ledger Workspace{% endblock %}
+{% block content %}
+<div class="page-heading"><div><p class="eyebrow">Administration</p><h1>Workspace settings</h1><p>Configuration is read-only during the monthly close.</p></div><button disabled title="Settings are locked during close">Save changes</button></div>
+<div class="settings-grid">
+  <section class="panel"><h2>Organisation</h2><label>Workspace name<input value="Northbridge Finance" disabled></label><label>Reporting timezone<input value="Europe / Paris" disabled></label><label>Close calendar<input value="Monthly · 10 business days" disabled></label></section>
+  <section class="panel"><h2>Report policy</h2><label>Default retention<input value="7 years" disabled></label><label>Approval model<input value="Controller + administrator" disabled></label><label>Export formats<input value="TXT (PDF and XLS pending)" disabled></label></section>
+  <section class="panel span-two"><h2>Access controls</h2><div class="setting-row"><div><strong>Administrator diagnostics</strong><p>Allow reporting administrators to test importer connectivity.</p></div><span class="toggle on"></span></div><div class="setting-row"><div><strong>Nightly maintenance snapshot</strong><p>Repack approved reports for the offsite archive each night.</p></div><span class="toggle on"></span></div><div class="setting-row"><div><strong>Self-service report creation</strong><p>Allow analysts to create reports without review.</p></div><span class="toggle"></span></div></section>
+</div>
+{% endblock %}
+

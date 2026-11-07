@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>{% block title %}Ledger Workspace{% endblock %}</title><link rel="stylesheet" href="/static/style.css"></head>
+<body class="app-body">
+<div class="app-shell">
+  <aside class="sidebar">
+    <a class="brand sidebar-brand" href="/reports">Northbridge <span>Ledger</span></a>
+    <p class="workspace-label">FINANCE WORKSPACE</p>
+    <nav class="side-nav" aria-label="Workspace navigation">
+      <a class="{% if section == 'overview' %}active{% endif %}" href="/reports"><span>▦</span> Overview</a>
+      <a class="{% if section == 'imports' %}active{% endif %}" href="/admin/imports"><span>⇅</span> Imports</a>
+      <a class="{% if section == 'diagnostics' %}active{% endif %}" href="/admin/diagnostics"><span>⌁</span> Diagnostics</a>
+      <a class="{% if section == 'audit' %}active{% endif %}" href="/admin/audit"><span>≡</span> Audit log</a>
+      <a class="{% if section == 'settings' %}active{% endif %}" href="/admin/settings"><span>⚙</span> Settings</a>
+    </nav>
+    <div class="sidebar-foot">
+      <span class="avatar">RA</span>
+      <div><strong>{{ session.get('username', 'reports-admin') }}</strong><small>Reporting administrator</small></div>
+      <a href="/logout" title="Sign out">↗</a>
+    </div>
+  </aside>
+  <section class="workspace">
+    <header class="topbar">
+      <div><span class="status-dot"></span> All systems operational</div>
+      <div class="top-actions"><button class="icon-button" disabled title="Notifications are not enabled">♢</button><a href="/handbook">Help centre</a></div>
+    </header>
+    <div class="workspace-content">
+      {% block content %}{% endblock %}
+    </div>
+  </section>
+</div>
+</body>
+</html>
+

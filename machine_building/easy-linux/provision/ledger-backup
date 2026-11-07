@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# ledger-backup — nightly maintenance snapshot for the reporting workspace.
+# Part of the archive rotation described in the service notices: every file
+# promoted to the night-operations queue is repacked for the offsite copy.
+set -euo pipefail
+
+CONFIG=/etc/ledger/archive.conf
+# shellcheck source=/dev/null
+source "${CONFIG}"
+: "${QUEUE_DIR:?missing QUEUE_DIR in ${CONFIG}}"
+: "${ARCHIVE_NAME:?missing ARCHIVE_NAME in ${CONFIG}}"
+
+cd "${QUEUE_DIR}"
+install -d -m 0750 -o root -g mira /var/backups/ledger/archive
+# Intentional challenge vulnerability: untrusted filenames are expanded as tar options.
+tar czf "/var/backups/ledger/archive/${ARCHIVE_NAME}" *
+

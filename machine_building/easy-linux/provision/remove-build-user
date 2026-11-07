@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+BUILD_USER="skip"
+
+if id "${BUILD_USER}" >/dev/null 2>&1; then
+    pkill -KILL -u "${BUILD_USER}" 2>/dev/null || true
+    userdel --remove "${BUILD_USER}"
+fi
+
+if getent group "${BUILD_USER}" >/dev/null 2>&1; then
+    groupdel "${BUILD_USER}"
+fi
+
+sed -i 's/^AllowUsers .*/AllowUsers mira/' /etc/ssh/sshd_config.d/90-ledger.conf
+/usr/sbin/sshd -t
+
+systemctl disable ledger-remove-build-user.service
+rm -f /etc/systemd/system/ledger-remove-build-user.service
+rm -f /usr/local/sbin/ledger-remove-build-user
+systemctl daemon-reload
+

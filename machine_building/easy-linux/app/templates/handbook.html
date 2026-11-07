@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Handbook — Northbridge Accounting</title><link rel="stylesheet" href="/static/style.css"></head>
+<body>
+<div class="shell">
+  {% include '_nav.html' %}
+  <main>
+    <p class="eyebrow">Reporting handbook</p>
+    <h1>Using Ledger</h1>
+    <ol class="steps">
+      <li><strong>Sign in</strong><span>Use the employee portal. Reporting administrators approve and export monthly summaries. Analysts normally rely on the assignment mail sent at the start of the close.</span></li>
+      <li><strong>Validate an importer</strong><span>Administrators can run the legacy connectivity diagnostic before scheduling a transfer. The diagnostic accepts any hostname or IPv4 address listed for an importer endpoint.</span></li>
+      <li><strong>Archive rotation</strong><span>The promotion queue is owned by the night-operations maintenance script, not by Ledger itself. Archive operators can inspect the active profile before staging reviewed reports.</span></li>
+      <li><strong>Publish</strong><span>Only approved text reports are made available for download.</span></li>
+    </ol>
+    <aside><strong>Security reminder:</strong> do not reuse reporting credentials outside their assigned service account. Night operators use a separate maintenance login and must never share it.</aside>
+  </main>
+</div>
+</body>
+</html>

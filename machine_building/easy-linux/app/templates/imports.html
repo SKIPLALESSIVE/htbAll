@@ -1,0 +1,12 @@
+{% extends 'dashboard-base.html' %}{% set section = 'imports' %}
+{% block title %}Imports — Ledger Workspace{% endblock %}
+{% block content %}
+<div class="page-heading"><div><p class="eyebrow">Data operations</p><h1>Import centre</h1><p>Monitor scheduled transfers from finance source systems.</p></div><button disabled title="Import scheduling is read-only">＋ Schedule import</button></div>
+<div class="callout warning"><div><strong>Legacy connector retained</strong><p>The archive migration is still being reconciled by the night-operations team. Run a connectivity diagnostic before escalating failed legacy jobs.</p></div><a href="/admin/diagnostics">Open diagnostics →</a></div>
+<section class="panel table-panel"><div class="panel-head"><div><h2>Configured connectors</h2><p>Three active data sources</p></div></div><div class="table-wrap"><table><thead><tr><th>Connector</th><th>Source</th><th>Schedule</th><th>Last run</th><th>Health</th><th></th></tr></thead><tbody>
+<tr><td><strong>General Ledger</strong><small>Primary ERP feed</small></td><td>PostgreSQL</td><td>Daily · 02:00</td><td>Today, 02:04</td><td><span class="badge approved">Healthy</span></td><td><button class="row-action" disabled>Details</button></td></tr>
+<tr><td><strong>Legacy Archive</strong><small>Migration compatibility · night-ops maintained</small></td><td>SFTP importer</td><td>Manual</td><td>7 Oct, 16:22</td><td><span class="badge review">Attention</span></td><td><a class="row-action" href="/admin/diagnostics">Diagnose</a></td></tr>
+<tr><td><strong>Exchange Rates</strong><small>Treasury reference data</small></td><td>HTTPS API</td><td>Weekdays · 18:00</td><td>Yesterday, 18:01</td><td><span class="badge approved">Healthy</span></td><td><button class="row-action" disabled>Details</button></td></tr>
+</tbody></table></div></section>
+{% endblock %}
+

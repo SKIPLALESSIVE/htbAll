@@ -1,0 +1,39 @@
+{% extends 'dashboard-base.html' %}
+{% set section = 'overview' %}
+{% block title %}Overview — Ledger Workspace{% endblock %}
+{% block content %}
+<div class="page-heading">
+  <div><p class="eyebrow">October close · Day 7 of 10</p><h1>Good afternoon, reporting team.</h1><p>Here is the current state of the Northbridge monthly close.</p></div>
+  <div class="heading-actions"><button class="secondary" disabled title="Available after close approval">Schedule export</button><button disabled title="Report creation is disabled in this environment">＋ New report</button></div>
+</div>
+
+<div class="metric-grid">
+  <article class="metric"><span>Approved reports</span><strong>18</strong><small class="positive">↑ 3 since yesterday</small></article>
+  <article class="metric"><span>Awaiting review</span><strong>4</strong><small>2 assigned to your team</small></article>
+  <article class="metric"><span>Importer success</span><strong>98.6%</strong><small class="positive">Healthy this month</small></article>
+  <article class="metric"><span>Close progress</span><strong>72%</strong><div class="progress"><i style="width:72%"></i></div></article>
+</div>
+
+<div class="dashboard-grid">
+  <section class="panel span-two">
+    <div class="panel-head"><div><h2>Close activity</h2><p>Approved reports over the last seven days</p></div><button class="text-button" disabled>Download CSV</button></div>
+    <div class="chart" aria-label="Bar chart of approved reports">
+      {% for day, value in [('Fri',38),('Sat',22),('Sun',28),('Mon',54),('Tue',67),('Wed',82),('Thu',72)] %}<div><i style="height:{{ value }}%"></i><span>{{ day }}</span></div>{% endfor %}
+    </div>
+  </section>
+  <section class="panel">
+    <div class="panel-head"><div><h2>Close checklist</h2><p>5 of 7 controls complete</p></div></div>
+    <ul class="checklist"><li class="done">Trial balance imported</li><li class="done">Intercompany matched</li><li class="done">FX rates validated</li><li class="done">Variance notes attached</li><li class="done">Controller review</li><li>Final approval</li><li>Archive export</li></ul>
+  </section>
+</div>
+
+<section class="panel table-panel">
+  <div class="panel-head"><div><h2>Recent reports</h2><p>Latest files available to the reporting workspace</p></div><a href="/admin/imports">View importer</a></div>
+  <div class="table-wrap"><table><thead><tr><th>Report</th><th>Owner</th><th>Period</th><th>Status</th><th>Updated</th><th></th></tr></thead><tbody>
+  {% for report in reports %}<tr><td><span class="file-icon">TXT</span><strong>{{ report }}</strong></td><td>Mira Cole</td><td>Q3 2026</td><td><span class="badge approved">Approved</span></td><td>Today, 14:32</td><td><a class="row-action" href="/export/{{ report }}">Download</a></td></tr>{% endfor %}
+  <tr><td><span class="file-icon">PDF</span><strong>variance-analysis.pdf</strong></td><td>Jon Bell</td><td>Q3 2026</td><td><span class="badge review">In review</span></td><td>Yesterday</td><td><button class="row-action disabled" disabled>Locked</button></td></tr>
+  <tr><td><span class="file-icon">XLS</span><strong>regional-rollup.xlsx</strong></td><td>Sara Lin</td><td>Q3 2026</td><td><span class="badge draft">Draft</span></td><td>8 Oct</td><td><button class="row-action disabled" disabled>Locked</button></td></tr>
+  </tbody></table></div>
+</section>
+{% endblock %}
+

@@ -1,0 +1,10 @@
+{% extends 'dashboard-base.html' %}{% set section = 'diagnostics' %}
+{% block title %}Diagnostics — Ledger Workspace{% endblock %}
+{% block content %}
+<div class="page-heading"><div><p class="eyebrow">Legacy importer</p><h1>Connectivity diagnostics</h1><p>Test whether an importer endpoint is reachable from the Ledger application.</p></div><span class="badge review">Compatibility mode</span></div>
+<div class="dashboard-grid">
+  <section class="panel span-two diagnostic-card"><div class="panel-head"><div><h2>Endpoint check</h2><p>Enter a hostname or IPv4 address registered to an importer.</p></div></div><form method="post"><label>Importer host<input name="host" value="{{ host }}" placeholder="archive.internal" required></label><div class="form-actions"><button type="submit">Run connectivity check</button><button class="secondary" type="button" disabled title="Saved targets are not configured">Saved targets</button></div></form>{% if output is not none %}<div class="terminal"><div><span></span><span></span><span></span><strong>Diagnostic output</strong></div><pre>{{ output }}</pre></div>{% endif %}</section>
+  <aside class="panel help-card"><h2>Before you start</h2><ul><li>Confirm the importer is listed in the Import centre.</li><li>Use a hostname where possible.</li><li>Attach the output to any operations ticket.</li></ul><a href="/admin/imports">Review connectors →</a></aside>
+</div>
+{% endblock %}
+

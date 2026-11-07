@@ -1,0 +1,5 @@
+injection pgsql avec les deux sccripts pour avoir un premier rev shell
+ensuite on voit une session x11 sur le user sans authent, on se connecte en rev shell on a le user flag 
+L'élévation de privilèges repose sur une injection de commandes Bash dans un script de maintenance exécuté en root. L'utilisateur dutyfree-kiosk, membre du groupe pos-ops, dispose d'un accès en écriture au fichier /opt/vrs/data/duty-rates.csv.
+Ce fichier est surveillé par l'unité systemd vrs-duty-apply.path, qui déclenche automatiquement vrs-duty-apply.service lors d'une modification. Le service exécute le script /opt/vrs/bin/apply-duty-rates.sh avec les privilèges root.
+Le script lit le CSV et utilise eval "${tax_class}=${duty_pct}" sans valider le contenu de tax_class. Un attaquant peut donc injecter des instructions Bash dans ce champ, qui seront exécutées avec les privilèges du service.

@@ -1,0 +1,14 @@
+{% extends 'dashboard-base.html' %}{% set section = 'audit' %}
+{% block title %}Audit log — Ledger Workspace{% endblock %}
+{% block content %}
+<div class="page-heading"><div><p class="eyebrow">Governance</p><h1>Audit log</h1><p>Recent reporting and administrative events.</p></div><button class="secondary" disabled title="Exports are disabled in this lab">Export log</button></div>
+<section class="panel timeline">
+  <article><span class="event-icon success">✓</span><div><strong>Report approved</strong><p>q3-summary.txt approved by reports-admin</p><time>Today · 14:32</time></div></article>
+  <article><span class="event-icon info">↻</span><div><strong>Connector check requested</strong><p>Legacy Archive connectivity test completed</p><time>Today · 11:08</time></div></article>
+  <article><span class="event-icon neutral">●</span><div><strong>Nightly archive repack</strong><p>Maintenance snapshot under /var/backups/ledger/archive finished normally</p><time>Today · 03:15</time></div></article>
+  <article><span class="event-icon success">✓</span><div><strong>Import completed</strong><p>General Ledger · 1,284 records processed</p><time>Today · 02:04</time></div></article>
+  <article><span class="event-icon neutral">●</span><div><strong>Administrator signed in</strong><p>Reporting workspace session created</p><time>Yesterday · 16:47</time></div></article>
+  <article><span class="event-icon info">↻</span><div><strong>Legacy archive reconciled</strong><p>Night operators flagged three unmatched Northwind records for follow-up</p><time>Yesterday · 23:50</time></div></article>
+</section>
+{% endblock %}
+

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE foo [
+  <!ENTITY xxe SYSTEM "file:///etc/passwd">
+]>
+<ns0:IATA_AIDX_FlightLegNotifRQ
+    xmlns:ns0="http://www.iata.org/IATA/2007/00"
+    Version="22.1"
+    TimeStamp="2026-10-11T15:20:00Z"
+    TransactionIdentifier="xxe-test-003"
+    TransactionStatusCode="Update">
+
+  <ns0:Originator
+      CompanyShortName="TEST"
+      TravelSector="A"
+      Code="TS"
+      CodeContext="3"/>
+
+  <ns0:FlightLeg>
+    <ns0:LegIdentifier>
+      <ns0:Airline CodeContext="3">TS</ns0:Airline>
+      <ns0:FlightNumber>1337</ns0:FlightNumber>
+      <ns0:DepartureAirport CodeContext="3">AAA</ns0:DepartureAirport>
+      <ns0:ArrivalAirport CodeContext="3">BBB</ns0:ArrivalAirport>
+      <ns0:OriginDate>2026-10-11</ns0:OriginDate>
+      <ns0:RepeatNumber CurrentInd="true">1</ns0:RepeatNumber>
+    </ns0:LegIdentifier>
+
+    <ns0:LegData InternationalStatus="Domestic">
+      <ns0:RemarkFreeText>&xxe;</ns0:RemarkFreeText>
+    </ns0:LegData>
+  </ns0:FlightLeg>
+</ns0:IATA_AIDX_FlightLegNotifRQ>

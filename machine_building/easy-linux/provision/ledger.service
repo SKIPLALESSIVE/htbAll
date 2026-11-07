@@ -1,0 +1,27 @@
+[Unit]
+Description=Ledger reporting application
+After=network.target
+
+[Service]
+User=ledger
+Group=ledger
+WorkingDirectory=/opt/ledger/app
+Environment=PATH=/opt/ledger/venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+EnvironmentFile=/etc/ledger/ledger.env
+ExecStart=/opt/ledger/venv/bin/gunicorn --workers 2 --bind 127.0.0.1:8000 app:app
+Restart=on-failure
+PrivateTmp=true
+PrivateDevices=true
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=read-only
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+LockPersonality=true
+UMask=0027
+
+[Install]
+WantedBy=multi-user.target
+

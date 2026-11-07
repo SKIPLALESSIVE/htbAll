@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Sign in — Northbridge Ledger</title><link rel="stylesheet" href="/static/style.css"></head>
+<body class="login-body">
+<div class="login-shell">
+  <section class="login-story">
+    <a class="brand" href="/">Northbridge <span>Ledger</span></a>
+    <div><p class="eyebrow">FINANCE OPERATIONS</p><h1>Close with clarity.</h1><p>Review reports, monitor source imports and keep every approval in one controlled workspace.</p><div class="trust-row"><span>✓ Controlled exports</span><span>✓ Full audit trail</span><span>✓ Close monitoring</span></div></div>
+    <small>Northbridge Accounting · Internal reporting system</small>
+  </section>
+  <section class="login-form-panel">
+    <div class="login-card"><div class="mobile-brand"><a class="brand" href="/">Northbridge <span>Ledger</span></a></div><p class="eyebrow">WELCOME BACK</p><h2>Sign in to your workspace</h2><p class="muted">Use your assigned reporting account.</p>{% if error %}<p class="error-box">{{ error }}</p>{% endif %}<form method="post"><label>Username<input name="username" autocomplete="username" placeholder="name@northbridge" required><small id="directory-hint" class="field-hint" aria-live="polite"></small></label><label>Password<input name="password" type="password" autocomplete="current-password" placeholder="Enter your password" required></label><div class="form-meta"><label class="checkbox"><input type="checkbox" disabled> Remember this device</label><button class="link-button" type="button" disabled>Forgot password?</button></div><button class="full-button" type="submit">Sign in securely</button></form><p class="support">Access issue? <a href="/handbook">Read the reporting handbook</a></p></div>
+  </section>
+</div>
+<script src="/static/login.js"></script>
+</body>
+</html>

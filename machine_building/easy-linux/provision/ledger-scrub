@@ -1,0 +1,57 @@
+#!/bin/bash
+# Final installation scrub: remove build/test state without deleting the account,
+# flags or standard shell defaults. This script is run once by install.sh.
+set -euo pipefail
+
+exec 9>/run/lock/ledger-scrub.lock
+/usr/bin/flock -n 9 || exit 0
+
+PLAYER_HOME=/home/mira
+REPORT_DIR=/opt/ledger/reports
+QUEUE_DIR=/var/spool/ledger/nightly
+SEED_DIR=/usr/local/share/ledger-seed
+
+# Reset the two intentional player workspaces from root-owned canonical copies.
+/usr/bin/find "${REPORT_DIR}" -mindepth 1 -maxdepth 1 -exec /usr/bin/rm -rf -- {} +
+/usr/bin/cp -- "${SEED_DIR}/q3-summary.txt" "${REPORT_DIR}/q3-summary.txt"
+/usr/bin/chown mira:mira "${REPORT_DIR}/q3-summary.txt"
+/usr/bin/chmod 0644 "${REPORT_DIR}/q3-summary.txt"
+
+/usr/bin/find "${QUEUE_DIR}" -mindepth 1 -maxdepth 1 -exec /usr/bin/rm -rf -- {} +
+/usr/bin/cp -- "${SEED_DIR}/q3-summary.txt" "${QUEUE_DIR}/approved-q3-summary.txt"
+/usr/bin/chown root:archive-ops "${QUEUE_DIR}/approved-q3-summary.txt"
+/usr/bin/chmod 0660 "${QUEUE_DIR}/approved-q3-summary.txt"
+
+# Preserve the flag and standard login files; discard everything else in Mira's home,
+# including root-owned SUID payloads produced during a successful solve.
+/usr/bin/find "${PLAYER_HOME}" -mindepth 1 -maxdepth 1 \
+    ! -name user.txt \
+    ! -name .bashrc \
+    ! -name .profile \
+    ! -name .bash_logout \
+    ! -name .bash_history \
+    ! -name .mysql_history \
+    ! -name .python_history \
+    ! -name .viminfo \
+    -exec /usr/bin/rm -rf -- {} +
+
+# Remove top-level temporary objects created by Mira and known validation payloads.
+for temporary_root in /tmp /dev/shm; do
+    /usr/bin/find "${temporary_root}" -mindepth 1 -maxdepth 1 -user mira \
+        -exec /usr/bin/rm -rf -- {} +
+done
+/usr/bin/rm -f -- /tmp/rootbash /tmp/ledger-rootbash
+
+# Generated archives are state, not seed data.
+/usr/bin/rm -f -- /var/backups/ledger/archive/reports.tgz
+
+# Reassert permissions in case a solve was interrupted midway.
+/usr/bin/chown root:root /etc/ledger
+/usr/bin/chmod 0755 /etc/ledger
+/usr/bin/chown root:archive-ops /etc/ledger/archive.conf
+/usr/bin/chmod 0640 /etc/ledger/archive.conf
+/usr/bin/chown root:ledger /etc/ledger/ledger.env
+/usr/bin/chmod 0640 /etc/ledger/ledger.env
+
+/usr/bin/rm -rf -- "${SEED_DIR}"
+/usr/bin/logger -t ledger-scrub 'final installation state restored'

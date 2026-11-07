@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+*.ova
+*.ovf
+*.vdi
+*.vmdk
+*.box
+artifacts/
+screenshots/
+

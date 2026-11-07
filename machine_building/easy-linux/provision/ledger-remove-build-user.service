@@ -1,0 +1,12 @@
+[Unit]
+Description=Remove the temporary Ledger build account
+After=network.target
+Before=ledger.service nginx.service ssh.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/ledger-remove-build-user
+
+[Install]
+WantedBy=multi-user.target
+
